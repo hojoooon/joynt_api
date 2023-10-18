@@ -1,23 +1,19 @@
-from fastapi import FastAPI,Depends, Response, status
+from fastapi import FastAPI, Depends, Response
 from fastapi.responses import RedirectResponse
-from typing import List, Union
-from sqlmodel import Session
 
 from model import Cali
-from database import CaliModel, engine
+from database import engineconn
 
 import uvicorn
 
 app = FastAPI()
+engine = engineconn()
+session = engine.sessionmaker()
 
 
-def get_session():
-    with Session(engine) as session:
-        yield session
-
-@app.get("/get_data/{sensor_nm}", response_model = Union[Cali, str])
-async def get_data(sensor_nm: str, response: Response, session: Session = Depends(get_session)):
-        cali_data = session.get(CaliModel, sensor_nm)
+@app.get("/get_data/{sensor_nm}")
+async def get_data(sensor_nm: str, response: Response):
+        cali_data = session.query(Cali).filter(Cali.SENSOR_NM == sensor_nm).first()
         if cali_data is None:
             response.status_code = 404
             return "Data not found"

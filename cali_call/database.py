@@ -1,19 +1,18 @@
-from typing import Optional
-from sqlmodel import Field, SQLModel, create_engine
+from sqlalchemy import *
+from sqlalchemy.orm import sessionmaker
+
 
 db_url = 'mysql+pymysql://root:12345!34.64.233.229:3306/playground2'
-db_file = 'data.db'
-engine = create_engine(f'sqlite:///{db_url}', echo=True, connect_args={"check_same_thread": False})
+db_file = 'data.db' #목업데이터 확인용
 
-class CaliModel(SQLModel, table=True):
-    __tablename__ = "sensor_calibrations"
+class engineconn:
+    engine = create_engine(f'sqlite:///{db_url}', echo=True, connect_args={"check_same_thread": False})
+
+    def sessionmaker(self):
+        Session = sessionmaker(bind = self.engine)
+        session = Session()
+        return session
     
-    SENSOR_NM: str = Field(primary_key=True)
-    CALIBRATION_VALUE: int
-
-
-def create_table():
-    SQLModel.metadata.create_all(engine)
-
-if __name__ == "__main__":
-    create_table()
+    def connection(self):
+        conn = self.engine.connect()
+        return conn

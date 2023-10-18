@@ -1,13 +1,16 @@
-from pydantic import BaseModel
-from typing import Optional, List
-from datetime import datetime
+from sqlalchemy import Column, Integer, VARCHAR, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
-class Sensor(BaseModel):
-    user_id: str
-    SENSOR_DT: datetime
-    EXER_TIME: datetime
-    EXER_COUNT: int
-    INTENSITY: int
+
+Base = declarative_base()
+
+class Sensor(Base):
+    __tablename__ = "user_fit_data"
+    user_id: Column(VARCHAR(255), primary_key=True)
+    SENSOR_DT: Column(DateTime)
+    EXER_TIME: Column(DateTime)
+    EXER_COUNT: Column(Integer)
+    INTENSITY: Column(Integer)
 '''
     class Config:
         arbitrary_types_allowed = True

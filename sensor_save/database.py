@@ -1,24 +1,17 @@
-from typing import Optional
-from sqlmodel import Field, SQLModel, create_engine
-from datetime import datetime
-from fastapi import Body
+from sqlalchemy import *
+from sqlalchemy.orm import sessionmaker
 
 db_url = 'mysql+pymysql://root:12345!@34.64.233.229:3306/playground2' 
-db_file = 'data.db'
-engine = create_engine(f'sqlite:///{db_url}', echo=True)
+db_file = 'data.db' #목업데이터 확인용
 
-class SensorModel(SQLModel, table=True):
-    __tablename__ = "user_fit_data"
-    user_id: str = Field(default=None, primary_key= True)
-    SENSOR_DT: Optional[datetime] = Body(None)
-    EXER_TIME: Optional[datetime] = Body(None)
-    EXER_COUNT: int
-    INTENSITY: int
+class engineconn:
+    engine = create_engine(f'sqlite:///{db_url}', echo=True, connect_args={"check_same_thread": False})
 
-
-def create_table():
-    SQLModel.metadata.create_all(engine)
-
-if __name__ == "__main__":
-    create_table()
-
+    def sessionmaker(self):
+        Session = sessionmaker(bind = self.engine)
+        session = Session()
+        return session
+    
+    def connection(self):
+        conn = self.engine.connect()
+        return conn

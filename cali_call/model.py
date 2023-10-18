@@ -1,19 +1,10 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from sqlalchemy import Column, Integer, String, VARCHAR, Table, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Cali(BaseModel):
-    #__tablename__ = "sensor_calibrations"
-    SENSOR_NM: str
-    CALIBRATION_VALUE: int
 
-    '''class Config:
-        arbitrary_types_allowed = True
-        schema_extra = {
-            "example":{
-                "SENSOR_NM": "Joynt Fit Sensor 1",
-                "CALIBRATION_VALUE": 52590
-            }
-        }'''
+class Cali(Base):
+    __tablename__ ="sensor_calibration"
+    SENSOR_NM: Column(VARCHAR(255), nullable=False, primary_key=True)
+    CALIBRATION_VALUE: Column(Integer)
