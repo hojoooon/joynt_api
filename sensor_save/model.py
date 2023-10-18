@@ -11,16 +11,3 @@ class Sensor(Base):
     EXER_TIME: Column(DateTime)
     EXER_COUNT: Column(Integer)
     INTENSITY: Column(Integer)
-'''
-    class Config:
-        arbitrary_types_allowed = True
-        schema_extra = {
-            "example":{
-                "user_id": "01012345678",
-                "SENSOR_DT": "2023-09-25 16:22:25",
-                "EXER_DT": "2023-09-25 16:22:25",
-                "EXER_COUNT": 40,
-                "INTENSITY": 3
-            }
-        }
-'''

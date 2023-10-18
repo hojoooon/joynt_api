@@ -12,7 +12,7 @@ engine = engineconn()
 session = engine.sessoinmaker()
 
 
-@app.post("/sensor", status_code = 201) #response model 에러로 인해 x
+@app.post("/sensor", status_code = 201) 
 def save_data(sensor: Sensor):
     user = Sensor()
     user.user_id = sensor.user_id
@@ -29,5 +29,4 @@ def save_data(sensor: Sensor):
 
 
 if __name__ == "__main__":
-    #uvicorn.run("main:app", host="35.216.50.104", port=8001, reload=True)
     uvicorn.run("main:app", host="127.0.0.1", port = 8000, reload = True)

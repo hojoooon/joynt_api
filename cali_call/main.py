@@ -30,6 +30,5 @@ async def save_data(cali: CaliModel, session: Session=Depends(get_session)):
 '''
 
 if __name__ == '__main__':
-    #uvicorn.run("main:app", host="35.216.50.104", port = 8001, reload=True)
     uvicorn.run("main:app", host="127.0.0.1", port = 8000, reload = True)
 
